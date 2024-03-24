@@ -1,11 +1,12 @@
 
 import './App.css';
-import BookingApp from './components/BookingApp';
+import AllRoutes from './components/Allroutes';
+// import BookingApp from './components/BookingApp';
 
 function App() {
   return (
     <div className="App">
-      <BookingApp />
+      <AllRoutes />
     </div>
   );
 }

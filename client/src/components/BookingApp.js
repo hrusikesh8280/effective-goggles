@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Container,
@@ -94,6 +95,7 @@ const BookingApp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const navigate = useNavigate()
 
   const fetchCarOptions = async () => {
     setIsLoading(true);
@@ -147,7 +149,7 @@ const BookingApp = () => {
         isClosable: true,
       });
       setIsLoading(false);
-      onOpen(); 
+      onOpen(); // Consider showing toast instead of modal for success message
     } catch (error) {
       toast({
         title: "Error creating booking",
@@ -233,26 +235,29 @@ const BookingApp = () => {
         )}
       </VStack>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Booking Successful</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>
-              Congratulations, {userName}! Your booking for {selectedCar?.name}{" "}
-              has been confirmed.
-            </Text>
-            <Text>Total distance is {distance}</Text>
-            <Text>Price: ${selectedCar?.price}</Text>
-            <Text>Your cab is on its way!</Text>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Booking Successful</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Text>
+            Congratulations, {userName}! Your booking for {selectedCar?.name}
+            has been confirmed.
+          </Text>
+          <Text>Total distance is {distance}</Text>
+          <Text>Price: ${selectedCar?.price}</Text>
+          <Text>Your cab is on its way!</Text>
+        </ModalBody>
+        <ModalFooter>
+          <Button colorScheme="blue" mr={3} onClick={() => navigate("/all-bookings")}>
+            View All Bookings
+          </Button>
+          <Button colorScheme="gray" onClick={onClose}>
+            Close
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
     </Container>
   );
 };
